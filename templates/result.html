@@ -1,0 +1,64 @@
+{% extends "base.html" %} {% block content %}
+<h2 class="text-center mb-4">
+  📊 Prediction Results for <span class="text-info">{{ stock }}</span>
+</h2>
+
+{% if error %}
+<div class="alert alert-danger text-center">{{ error }}</div>
+{% else %}
+<section class="mb-5">
+  <h4 class="mb-3">📈 Original Closing Prices Over Time</h4>
+  <div class="text-center">
+    <img src="{{ original_plot }}" class="img-fluid rounded shadow" />
+  </div>
+</section>
+
+<section class="mb-5">
+  <h4 class="mb-3">🔍 Original vs Predicted Test Data</h4>
+  <div class="text-center">
+    <img src="{{ predicted_plot }}" class="img-fluid rounded shadow" />
+  </div>
+</section>
+
+<section class="mb-4">
+  <h4 class="mb-3">
+    🚀 Future Close Price Predictions (Next {{ future_predictions|length }}
+    Days)
+  </h4>
+  <div class="text-center">
+    <img src="{{ future_plot }}" class="img-fluid rounded shadow" />
+  </div>
+
+  <div class="table-responsive mt-4">
+    <table class="table table-dark table-striped table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>📅 Day</th>
+          <th>💰 Predicted Close Price (USD)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for day, price in enumerate(future_predictions, start=1) %}
+        <tr>
+          <td>{{ day }}</td>
+          <td>${{ price | round(2) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="text-center mt-3">
+      <a
+        href="{{ url_for('download', stock=stock, predictions=future_predictions) }}"
+        class="btn btn-success"
+      >
+        ⬇️ Download Predictions as CSV
+      </a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<div class="text-center mt-4">
+  <a href="/" class="btn btn-outline-light">🔙 Back to Home</a>
+</div>
+{% endblock %}

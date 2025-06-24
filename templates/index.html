@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-center mb-4">🔮 Cryptocurrency Price Predictor</h1>
+<p class="text-center text-muted">Enter a cryptocurrency ticker (e.g., <strong>BTC-USD</strong>) and how many days you want to predict. The model will fetch historical data and forecast future prices using AI.</p>
+
+<form method="post" action="/" class="mt-4 mx-auto" style="max-width: 500px;">
+    <div class="mb-4">
+        <label for="stock" class="form-label">Cryptocurrency Ticker</label>
+        <input type="text" class="form-control" id="stock" name="stock" placeholder="e.g., BTC-USD" required>
+    </div>
+    <div class="mb-4">
+        <label for="no_of_days" class="form-label">Number of Days to Predict</label>
+        <input type="number" class="form-control" id="no_of_days" name="no_of_days" min="1" max="100" value="10" required>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary px-4 py-2" style="box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);">
+            ⚡ Predict
+        </button>
+    </div>
+</form>
+<div id="loading" class="text-center mt-4" style="display: none;">
+    <div class="spinner-border text-info" role="status" style="width: 3rem; height: 3rem;"></div>
+    <p class="mt-2">Predicting... please wait</p>
+</div>
+{% endblock %}
